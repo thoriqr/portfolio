@@ -1,19 +1,29 @@
-import { Button } from "@/components/ui/button"
+import { PageLayout } from "@/components/page-layout"
+import { ProjectCard } from "@/components/project-card"
+import { projects } from "@/constants/projects"
 
-export default function Page() {
+export default function HomePage() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
+    <PageLayout>
+      {/* HERO */}
+      <section className="space-y-4">
+        <h1 className="text-3xl font-semibold tracking-tight">Thoriq Rahman</h1>
+
+        <p className="max-w-xl text-muted-foreground">
+          Fullstack developer focused on building scalable e-commerce systems,
+          from storefront UX to backend architecture.
+        </p>
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-xl font-semibold tracking-tight">Projects</h2>
+
+        <div className="space-y-4">
+          {projects.map((project) => (
+            <ProjectCard key={project.href} {...project} />
+          ))}
         </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
-    </div>
+      </section>
+    </PageLayout>
   )
 }
