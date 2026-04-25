@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image"
+import { useEffect, useState } from "react"
 import {
   Carousel,
   CarouselApi,
@@ -8,12 +8,20 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
+} from "./ui/carousel"
+import Image from "next/image"
+import { Badge } from "./ui/badge"
 
-import { STOREFRONT_IMAGES } from "./constants"
-import { useEffect, useState } from "react"
+type CarouselItem = {
+  src: string
+  label: string
+}
 
-export function StorefrontCarousel() {
+type Props = {
+  items: CarouselItem[]
+}
+
+export function ImageCarousel({ items }: Props) {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
 
@@ -44,17 +52,21 @@ export function StorefrontCarousel() {
         }}
       >
         <CarouselContent>
-          {STOREFRONT_IMAGES.map((img, index) => (
+          {items.map((img, index) => (
             <CarouselItem key={index}>
-              <div className="overflow-hidden rounded-sm border">
+              <div className="relative overflow-hidden rounded-sm border">
                 <Image
                   src={img.src}
-                  alt={img.alt}
+                  alt={img.label}
                   width={1200}
                   height={800}
                   className="object-cover"
                   priority={index === 0}
                 />
+
+                <Badge className="absolute bottom-3 left-3 z-10 bg-black/70 p-1.5 text-white backdrop-blur-sm">
+                  {img.label}
+                </Badge>
               </div>
             </CarouselItem>
           ))}
@@ -67,7 +79,7 @@ export function StorefrontCarousel() {
 
       {/* Mobile dots */}
       <div className="mt-4 flex justify-center gap-2 md:hidden">
-        {STOREFRONT_IMAGES.map((_, index) => (
+        {items.map((_, index) => (
           <button
             key={index}
             onClick={() => api?.scrollTo(index)}

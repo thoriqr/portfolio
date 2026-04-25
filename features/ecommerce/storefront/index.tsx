@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { StorefrontCarousel } from "./storefront-carousel"
+import { ImageCarousel } from "@/components/image-carousel"
+import { STOREFRONT_IMAGES } from "./constants"
 
 export default function Storefront() {
   const demoUrl = process.env.COMMERCE_STORE_FRONT!
@@ -10,14 +11,15 @@ export default function Storefront() {
       <h2 className="font-medium">Storefront</h2>
 
       {/* IMAGE */}
-      <StorefrontCarousel />
+      <ImageCarousel items={STOREFRONT_IMAGES} />
 
       <p className="text-sm text-muted-foreground">
-        Customer-facing interface for browsing products and completing checkout.
+        E-commerce storefront built around a variant-centric product system,
+        enabling flexible product browsing and selection.
       </p>
 
       <p className="text-sm text-muted-foreground">
-        Tech stack: Next.js, React Query
+        Tech stack: Next.js, TanStack Query, Tailwind CSS, shadcn/ui, Zod
       </p>
 
       <div className="flex gap-4 text-sm">
