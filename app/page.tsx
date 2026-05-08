@@ -1,18 +1,40 @@
 import { PageLayout } from "@/components/page-layout"
 import { ProjectCard } from "@/components/project-card"
 import { projects } from "@/constants/projects"
+import Link from "next/link"
 
 export default function HomePage() {
   return (
     <PageLayout>
-      {/* HERO */}
       <section className="space-y-4">
-        <h1 className="text-3xl font-semibold tracking-tight">Thoriq Rahman</h1>
+        <div className="space-y-2">
+          <h1 className="text-3xl font-semibold tracking-tight">
+            Thoriq Rahman
+          </h1>
 
-        <p className="max-w-xl text-muted-foreground">
-          Fullstack developer focused on building scalable e-commerce systems,
-          from storefront UX to backend architecture.
-        </p>
+          <p className="max-w-xl text-muted-foreground">
+            Fullstack developer focused on building scalable e-commerce systems,
+            from storefront UX to backend architecture.
+          </p>
+        </div>
+
+        <div className="flex gap-4 text-sm">
+          <Link
+            href="https://github.com/thoriqr"
+            target="_blank"
+            className="underline underline-offset-4"
+          >
+            GitHub
+          </Link>
+
+          <Link
+            href="/thoriq-rahman-cv.pdf"
+            target="_blank"
+            className="underline underline-offset-4"
+          >
+            Resume
+          </Link>
+        </div>
       </section>
 
       <section className="space-y-6">

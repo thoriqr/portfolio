@@ -42,39 +42,39 @@ export function ImageCarousel({ items }: Props) {
   }, [api])
 
   return (
-    <div className="relative">
+    <>
       <Carousel
         setApi={setApi}
         opts={{
-          align: "start",
           loop: true,
-          containScroll: "trimSnaps",
         }}
       >
-        <CarouselContent>
-          {items.map((img, index) => (
-            <CarouselItem key={index}>
-              <div className="relative overflow-hidden rounded-sm border">
-                <Image
-                  src={img.src}
-                  alt={img.label}
-                  width={1200}
-                  height={800}
-                  className="object-cover"
-                  priority={index === 0}
-                />
+        <div className="overflow-hidden rounded-sm">
+          <CarouselContent>
+            {items.map((img, idx) => (
+              <CarouselItem key={idx}>
+                <div className="relative aspect-video w-full">
+                  <Image
+                    src={img.src}
+                    alt={img.label}
+                    sizes="100vw"
+                    fill
+                    loading={idx === 0 ? "eager" : "lazy"}
+                    className="object-cover"
+                  />
 
-                <Badge className="absolute bottom-3 left-3 z-10 bg-black/70 p-1.5 text-white backdrop-blur-sm">
-                  {img.label}
-                </Badge>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
+                  <Badge className="absolute bottom-3 left-3 z-10 bg-black/70 p-1.5 text-white backdrop-blur-sm">
+                    {img.label}
+                  </Badge>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </div>
 
         {/* Desktop arrows */}
-        <CarouselPrevious className="hidden md:flex" />
-        <CarouselNext className="hidden md:flex" />
+        <CarouselPrevious className="absolute top-1/2 -left-5 z-20 hidden h-9 w-9 -translate-y-1/2 border border-gray-200 shadow-md hover:bg-gray-50 md:flex" />
+        <CarouselNext className="absolute top-1/2 -right-5 z-20 hidden h-9 w-9 -translate-y-1/2 border border-gray-200 shadow-md hover:bg-gray-50 md:flex" />
       </Carousel>
 
       {/* Mobile dots */}
@@ -91,6 +91,6 @@ export function ImageCarousel({ items }: Props) {
           />
         ))}
       </div>
-    </div>
+    </>
   )
 }
