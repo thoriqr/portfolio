@@ -1,8 +1,8 @@
 import Link from "next/link"
 
 export default function BackendApi() {
-  const repoUrl = process.env.BACKEND_REPO!
-  const docsUrl = process.env.BACKEND_DOCS!
+  const repoUrl = process.env.NEXT_PUBLIC_API_REPO!
+  const docsUrl = process.env.NEXT_PUBLIC_API_DOCS!
 
   return (
     <section className="space-y-4">

@@ -3,8 +3,8 @@ import Link from "next/link"
 import { ADMIN_PANEL_IMAGES } from "./constants"
 
 export default function AdminPanel() {
-  const demoUrl = process.env.COMMERCE_ADMIN!
-  const repoUrl = process.env.ADMIN_REPO!
+  const demoUrl = process.env.NEXT_PUBLIC_ADMIN_URL!
+  const repoUrl = process.env.NEXT_PUBLIC_ADMIN_REPO!
 
   return (
     <section className="space-y-4">

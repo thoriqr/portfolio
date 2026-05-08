@@ -1,21 +1,42 @@
-# Next.js template
+# Portfolio
 
-This is a Next.js template with shadcn/ui.
+Personal portfolio website built with Next.js and TypeScript.
 
-## Adding components
+## Overview
 
-To add components to your app, run the following command:
+This project showcases my e-commerce ecosystem projects, including:
+
+- Commerce Core API
+- Commerce Admin Dashboard
+- Commerce Storefront
+
+The portfolio also includes links to my resume, GitHub profile, API documentation, and live project demos.
+
+## Tech Stack
+
+- Next.js
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+
+## Live Website
+
+https://thoriqr.my.id
+
+## Environment Variables
+
+Create a `.env.local` file based on `.env.example`.
+
+## Development
+
+Install dependencies:
 
 ```bash
-npx shadcn@latest add button
+npm install
 ```
 
-This will place the ui components in the `components` directory.
+Run the development server:
 
-## Using components
-
-To use the components in your app, import them as follows:
-
-```tsx
-import { Button } from "@/components/ui/button";
+```bash
+npm run dev
 ```

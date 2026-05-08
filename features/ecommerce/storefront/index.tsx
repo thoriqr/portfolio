@@ -3,8 +3,8 @@ import { ImageCarousel } from "@/components/image-carousel"
 import { STOREFRONT_IMAGES } from "./constants"
 
 export default function Storefront() {
-  const demoUrl = process.env.COMMERCE_STORE_FRONT!
-  const repoUrl = process.env.STORE_FRONT_REPO!
+  const demoUrl = process.env.NEXT_PUBLIC_STORE_URL!
+  const repoUrl = process.env.NEXT_PUBLIC_STORE_REPO!
 
   return (
     <section className="space-y-4">
