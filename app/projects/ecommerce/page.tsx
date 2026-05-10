@@ -6,17 +6,17 @@ import Storefront from "@/features/ecommerce/storefront"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "E-Commerce Platform",
+  title: "E-Commerce Project",
   description:
-    "Modern e-commerce ecosystem consisting of a storefront, admin dashboard, and backend API built with TypeScript and Node.js.",
+    "E-commerce application with a storefront, admin dashboard, and backend API.",
 }
 
 export default function EcommercePage() {
   return (
     <ProjectLayout>
       <ProjectHeader
-        title="E-commerce Platform"
-        description="Fullstack system consisting of storefront, admin panel, and backend API."
+        title="E-Commerce Project"
+        description="Storefront, admin dashboard, and backend API for an e-commerce application."
       />
 
       <Storefront />

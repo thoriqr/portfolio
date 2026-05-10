@@ -14,8 +14,8 @@ export default function Storefront() {
       <ImageCarousel items={STOREFRONT_IMAGES} />
 
       <p className="text-sm text-muted-foreground">
-        E-commerce storefront built around a variant-centric product system,
-        enabling flexible product browsing and selection.
+        E-commerce storefront with product browsing, variant selection, cart,
+        and checkout flow.
       </p>
 
       <p className="text-sm text-muted-foreground">

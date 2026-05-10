@@ -13,8 +13,8 @@ export default function HomePage() {
           </h1>
 
           <p className="max-w-xl text-muted-foreground">
-            Fullstack developer focused on building scalable e-commerce systems,
-            from storefront UX to backend architecture.
+            Fullstack developer focused on building web and e-commerce
+            applications using TypeScript, React, Node.js, and PostgreSQL.
           </p>
         </div>
 
@@ -28,11 +28,19 @@ export default function HomePage() {
           </Link>
 
           <Link
+            href="https://linkedin.com/in/thoriqrahman"
+            target="_blank"
+            className="underline underline-offset-4"
+          >
+            LinkedIn
+          </Link>
+
+          <Link
             href="/thoriq-rahman-cv.pdf"
             target="_blank"
             className="underline underline-offset-4"
           >
-            Resume
+            CV
           </Link>
         </div>
       </section>

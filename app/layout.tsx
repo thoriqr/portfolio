@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s | Thoriq Rahman",
   },
   description:
-    "Fullstack developer focused on building scalable e-commerce systems.",
+    "Fullstack developer focused on building web and e-commerce applications.",
 }
 
 export default function RootLayout({

@@ -14,9 +14,8 @@ export default function AdminPanel() {
       <ImageCarousel items={ADMIN_PANEL_IMAGES} />
 
       <p className="text-sm text-muted-foreground">
-        Admin dashboard for managing products, variants, and store content,
-        featuring a variant-centric product system with dynamic option
-        generation.
+        Admin dashboard for managing products, variants, orders, and storefront
+        content.
       </p>
 
       <p className="text-sm text-muted-foreground">

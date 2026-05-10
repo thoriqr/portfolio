@@ -9,14 +9,13 @@ export default function BackendApi() {
       <h2 className="font-medium">Backend API</h2>
 
       <p className="text-sm text-muted-foreground">
-        Production-oriented e-commerce backend focused on transactional checkout
-        flows, payment synchronization, snapshot-based order architecture, and
-        variant-driven commerce workflows.
+        Backend API for authentication, products, checkout, orders, and payment
+        handling.
       </p>
 
       <p className="text-sm text-muted-foreground">
-        Includes Midtrans payment integration, Redis caching, scheduled jobs,
-        integration testing, Swagger documentation, and GitHub Actions CI.
+        Includes payment integration, Redis caching, scheduled jobs, integration
+        testing, and Swagger documentation.
       </p>
 
       <p className="text-sm text-muted-foreground">
