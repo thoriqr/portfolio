@@ -1,26 +1,28 @@
 import { ProjectHeader } from "@/components/project-header"
 import { ProjectLayout } from "@/components/project-layout"
-import AdminPanel from "@/features/ecommerce/admin-panel"
+import WebAdminPanel from "@/features/ecommerce/web-admin-panel"
 import BackendApi from "@/features/ecommerce/backend-api"
-import Storefront from "@/features/ecommerce/storefront"
+import WebStorefront from "@/features/ecommerce/web-storefront"
 import { Metadata } from "next"
+import MobileStorefront from "@/features/ecommerce/mobile-storefront"
 
 export const metadata: Metadata = {
-  title: "E-Commerce Project",
+  title: "E-Commerce Platform",
   description:
-    "E-commerce application with a storefront, admin dashboard, and backend API.",
+    "E-commerce platform with a web storefront, mobile app, admin dashboard, and backend API.",
 }
 
 export default function EcommercePage() {
   return (
     <ProjectLayout>
       <ProjectHeader
-        title="E-Commerce Project"
-        description="Storefront, admin dashboard, and backend API for an e-commerce application."
+        title="E-Commerce Platform"
+        description="E-commerce platform with a web storefront, mobile app, admin dashboard, and backend API."
       />
 
-      <Storefront />
-      <AdminPanel />
+      <WebStorefront />
+      <MobileStorefront />
+      <WebAdminPanel />
       <BackendApi />
     </ProjectLayout>
   )

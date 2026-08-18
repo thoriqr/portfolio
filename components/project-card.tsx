@@ -1,13 +1,14 @@
 import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
+import { Badge } from "@/components/ui/badge"
 
 type Props = {
   title: string
   description: string
+  technologies: string[]
   href: string
 }
-
-export function ProjectCard({ title, description, href }: Props) {
+export function ProjectCard({ title, description, technologies, href }: Props) {
   return (
     <Link
       href={href}
@@ -17,6 +18,14 @@ export function ProjectCard({ title, description, href }: Props) {
         <h3 className="text-lg font-medium">{title}</h3>
 
         <p className="text-sm text-muted-foreground">{description}</p>
+      </div>
+
+      <div className="flex flex-wrap gap-3">
+        {technologies.map((technology) => (
+          <Badge key={technology} variant="default">
+            {technology}
+          </Badge>
+        ))}
       </div>
 
       <div className="flex items-center gap-2 text-sm text-muted-foreground">

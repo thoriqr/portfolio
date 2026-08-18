@@ -1,4 +1,17 @@
+import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
+
+const BACKEND_API_TECHNOLOGIES = [
+  "Node.js",
+  "Express",
+  "TypeScript",
+  "PostgreSQL",
+  "Redis",
+  "Knex",
+  "Zod",
+  "Google Cloud Run",
+  "Cloud Scheduler",
+]
 
 export default function BackendApi() {
   const repoUrl = process.env.NEXT_PUBLIC_API_REPO!
@@ -15,12 +28,14 @@ export default function BackendApi() {
 
       <p className="text-sm text-muted-foreground">
         Includes payment integration, Redis caching, scheduled jobs, integration
-        testing, and Swagger documentation.
+        testing, CI/CD, and Swagger documentation.
       </p>
 
-      <p className="text-sm text-muted-foreground">
-        Tech stack: Node.js, Express, TypeScript, PostgreSQL, Redis, Knex, Zod
-      </p>
+      <div className="flex flex-wrap gap-2">
+        {BACKEND_API_TECHNOLOGIES.map((technology) => (
+          <Badge key={technology}>{technology}</Badge>
+        ))}
+      </div>
 
       <div className="flex gap-4 text-sm">
         <Link href={docsUrl} target="_blank" className="underline">

@@ -1,16 +1,24 @@
 import Link from "next/link"
 import { ImageCarousel } from "@/components/image-carousel"
 import { STOREFRONT_IMAGES } from "./constants"
+import { Badge } from "@/components/ui/badge"
 
-export default function Storefront() {
+const WEB_STOREFRONT_TECHNOLOGIES = [
+  "Next.js",
+  "TanStack Query",
+  "Tailwind CSS",
+  "shadcn/ui",
+  "Zod",
+]
+
+export default function WebStorefront() {
   const demoUrl = process.env.NEXT_PUBLIC_STORE_URL!
   const repoUrl = process.env.NEXT_PUBLIC_STORE_REPO!
 
   return (
     <section className="space-y-4">
-      <h2 className="font-medium">Storefront</h2>
+      <h2 className="font-medium">Web Storefront</h2>
 
-      {/* IMAGE */}
       <ImageCarousel items={STOREFRONT_IMAGES} />
 
       <p className="text-sm text-muted-foreground">
@@ -18,14 +26,17 @@ export default function Storefront() {
         and checkout flow.
       </p>
 
-      <p className="text-sm text-muted-foreground">
-        Tech stack: Next.js, TanStack Query, Tailwind CSS, shadcn/ui, Zod
-      </p>
+      <div className="flex flex-wrap gap-3">
+        {WEB_STOREFRONT_TECHNOLOGIES.map((technology) => (
+          <Badge key={technology}>{technology}</Badge>
+        ))}
+      </div>
 
       <div className="flex gap-4 text-sm">
         <Link href={demoUrl} target="_blank" className="underline">
           Live Demo
         </Link>
+
         <Link href={repoUrl} target="_blank" className="underline">
           GitHub Repo
         </Link>

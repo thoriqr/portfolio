@@ -1,8 +1,9 @@
 export const projects = [
   {
-    title: "E-Commerce Project",
+    title: "E-Commerce Platform",
     description:
-      "Fullstack e-commerce application with a storefront, admin dashboard, and backend API.",
+      "Fullstack e-commerce platform with a web storefront, mobile app, admin dashboard, and backend API.",
+    technologies: ["TypeScript", "React", "Flutter", "Node.js", "PostgreSQL"],
     href: "/projects/ecommerce",
   },
 ]
