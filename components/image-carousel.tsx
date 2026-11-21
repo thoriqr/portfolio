@@ -2,14 +2,12 @@
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import { X } from "lucide-react"
+import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import {
   Carousel,
   CarouselApi,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "./ui/carousel"
 import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
@@ -24,14 +22,24 @@ type Props = {
   variant?: "wide" | "gallery"
 }
 
+const SWIPE_THRESHOLD = 48
+
+function isCarouselControl(target: EventTarget | null) {
+  return (
+    target instanceof Element && target.closest("[data-carousel-control]") !== null
+  )
+}
+
 export function ImageCarousel({ items, variant = "wide" }: Props) {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
-  const [selectedImage, setSelectedImage] = useState<CarouselImage | null>(null)
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const swipeStart = useRef<{ x: number; y: number } | null>(null)
 
   const isGallery = variant === "gallery"
+  const selectedImage = selectedIndex === null ? null : items[selectedIndex]
 
   useEffect(() => {
     if (!api) return
@@ -43,9 +51,11 @@ export function ImageCarousel({ items, variant = "wide" }: Props) {
     handleSelect()
 
     api.on("select", handleSelect)
+    api.on("reInit", handleSelect)
 
     return () => {
       api.off("select", handleSelect)
+      api.off("reInit", handleSelect)
     }
   }, [api])
 
@@ -55,14 +65,18 @@ export function ImageCarousel({ items, variant = "wide" }: Props) {
     if (!dialog) return
 
     if (selectedImage) {
-      dialog.showModal()
+      if (!dialog.open) dialog.showModal()
     } else if (dialog.open) {
       dialog.close()
     }
   }, [selectedImage])
 
-  const handleDialogClose = () => {
-    setSelectedImage(null)
+  const step = (direction: 1 | -1) => {
+    setSelectedIndex((index) => {
+      if (index === null) return index
+
+      return (index + direction + items.length) % items.length
+    })
   }
 
   const snapCount = api?.scrollSnapList().length ?? 0
@@ -74,10 +88,14 @@ export function ImageCarousel({ items, variant = "wide" }: Props) {
         opts={{
           loop: true,
           align: isGallery ? "start" : "center",
-          slidesToScroll: isGallery ? 3 : 1,
+          slidesToScroll: 1,
+          // Embla cancels the in-flight slide animation on mousedown anywhere
+          // inside its root, including the arrow buttons, which then swallows
+          // the click. Ignore drags that start on a control.
+          watchDrag: (_api, event) => !isCarouselControl(event.target),
         }}
       >
-        <div className="overflow-hidden rounded-sm">
+        <div className="overflow-hidden">
           <CarouselContent className={isGallery ? "-ml-3" : undefined}>
             {items.map((img, idx) => (
               <CarouselItem
@@ -86,15 +104,15 @@ export function ImageCarousel({ items, variant = "wide" }: Props) {
               >
                 <button
                   type="button"
-                  onClick={() => setSelectedImage(img)}
-                  className="block w-full cursor-pointer text-left"
+                  onClick={() => setSelectedIndex(idx)}
+                  className="block w-full cursor-zoom-in text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                   aria-label={`Open ${img.label}`}
                 >
                   <div
                     className={
                       isGallery
-                        ? "relative aspect-[9/20] w-full overflow-hidden rounded-sm"
-                        : "relative aspect-video w-full overflow-hidden rounded-sm"
+                        ? "relative aspect-[9/20] w-full overflow-hidden border bg-muted/40"
+                        : "relative aspect-video w-full overflow-hidden border bg-muted/40"
                     }
                   >
                     <Image
@@ -113,8 +131,8 @@ export function ImageCarousel({ items, variant = "wide" }: Props) {
                     <Badge
                       className={
                         isGallery
-                          ? "absolute bottom-2 left-2 z-10 max-w-[calc(100%-1rem)] truncate bg-black/70 px-1.5 py-1 text-[0.5rem] text-white backdrop-blur-sm"
-                          : "absolute bottom-3 left-3 z-10 bg-black/70 p-1.5 text-white backdrop-blur-sm"
+                          ? "absolute bottom-2 left-2 z-10 max-w-[calc(100%-1rem)] truncate border bg-background/90 px-1.5 py-1 font-mono text-[0.5rem] font-medium tracking-normal text-foreground normal-case backdrop-blur-sm"
+                          : "absolute bottom-3 left-3 z-10 border bg-background/90 px-2 py-1 font-mono text-[0.625rem] font-medium tracking-normal text-foreground normal-case backdrop-blur-sm"
                       }
                     >
                       {img.label}
@@ -126,39 +144,70 @@ export function ImageCarousel({ items, variant = "wide" }: Props) {
           </CarouselContent>
         </div>
 
-        {/* Desktop arrows */}
-        <CarouselPrevious className="absolute top-1/2 -left-5 z-20 hidden h-9 w-9 -translate-y-1/2 border border-gray-200 shadow-md hover:bg-gray-50 md:flex" />
+        <Button
+          type="button"
+          variant="outline"
+          size="icon"
+          data-carousel-control
+          onClick={() => api?.scrollPrev()}
+          className="absolute top-1/2 left-2 z-20 -translate-y-1/2 bg-background/90 backdrop-blur-sm"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="size-4" />
+        </Button>
 
-        <CarouselNext className="absolute top-1/2 -right-5 z-20 hidden h-9 w-9 -translate-y-1/2 border border-gray-200 shadow-md hover:bg-gray-50 md:flex" />
+        <Button
+          type="button"
+          variant="outline"
+          size="icon"
+          data-carousel-control
+          onClick={() => api?.scrollNext()}
+          className="absolute top-1/2 right-2 z-20 -translate-y-1/2 bg-background/90 backdrop-blur-sm"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="size-4" />
+        </Button>
       </Carousel>
 
-      {/* Mobile dots */}
       {snapCount > 1 && (
-        <div className="mt-4 flex justify-center gap-2 md:hidden">
+        <div className="-mt-1 flex flex-wrap justify-center gap-0.5">
           {Array.from({ length: snapCount }).map((_, index) => (
             <button
               key={index}
               type="button"
+              data-carousel-control
               aria-label={`Go to image group ${index + 1}`}
               aria-current={current === index}
               onClick={() => api?.scrollTo(index)}
-              className={`h-2 w-2 rounded-full transition-transform ${
-                current === index
-                  ? "scale-125 bg-foreground"
-                  : "bg-muted-foreground/40"
-              }`}
-            />
+              className="flex size-11 items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            >
+              <span
+                className={`size-1.5 transition-transform ${
+                  current === index
+                    ? "scale-150 bg-foreground"
+                    : "bg-muted-foreground/40"
+                }`}
+              />
+            </button>
           ))}
         </div>
       )}
 
-      {/* Native image dialog */}
       <dialog
         ref={dialogRef}
-        onClose={handleDialogClose}
+        onClose={() => setSelectedIndex(null)}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowLeft") {
+            event.preventDefault()
+            step(-1)
+          } else if (event.key === "ArrowRight") {
+            event.preventDefault()
+            step(1)
+          }
+        }}
         className="fixed inset-0 m-0 h-screen w-screen max-w-none border-0 bg-transparent p-0 outline-none backdrop:bg-black/80"
       >
-        {selectedImage && (
+        {selectedImage && selectedIndex !== null && (
           <div
             className="fixed inset-0 flex items-center justify-center p-4"
             onClick={(event) => {
@@ -167,13 +216,37 @@ export function ImageCarousel({ items, variant = "wide" }: Props) {
               }
             }}
           >
-            <div className="relative max-h-[90vh] max-w-[95vw]">
+            <div
+              className="relative max-h-[90vh] max-w-[95vw] select-none"
+              onPointerDown={(event) => {
+                swipeStart.current = { x: event.clientX, y: event.clientY }
+              }}
+              onPointerUp={(event) => {
+                const start = swipeStart.current
+
+                swipeStart.current = null
+
+                if (!start) return
+
+                const deltaX = event.clientX - start.x
+                const deltaY = event.clientY - start.y
+
+                if (Math.abs(deltaX) < SWIPE_THRESHOLD) return
+                if (Math.abs(deltaX) < Math.abs(deltaY)) return
+
+                step(deltaX < 0 ? 1 : -1)
+              }}
+              onPointerCancel={() => {
+                swipeStart.current = null
+              }}
+            >
               <Image
                 src={selectedImage.src}
                 alt={selectedImage.label}
                 width={1600}
                 height={1200}
                 sizes="95vw"
+                draggable={false}
                 className="max-h-[90vh] w-auto max-w-[95vw] object-contain"
               />
 
@@ -182,15 +255,48 @@ export function ImageCarousel({ items, variant = "wide" }: Props) {
                 variant="secondary"
                 size="icon"
                 onClick={() => dialogRef.current?.close()}
-                className="absolute top-3 -right-12 z-10 rounded-full bg-black/70 text-white backdrop-blur-sm hover:bg-black/90 hover:text-white"
+                className="absolute top-2 -right-12 z-10"
                 aria-label="Close image"
               >
-                <X className="h-4 w-4" />
+                <X className="size-4" />
               </Button>
 
-              <Badge className="absolute bottom-3 left-3 z-10 bg-black/70 p-1.5 text-white backdrop-blur-sm">
+              <Badge className="absolute bottom-3 left-3 z-10 border bg-background/90 px-2 py-1 font-mono text-[0.625rem] font-medium tracking-normal text-foreground normal-case backdrop-blur-sm">
                 {selectedImage.label}
               </Badge>
+
+              <p
+                className="absolute right-3 bottom-3 z-10 border bg-background/90 px-2 py-1 font-mono text-[0.625rem] tracking-[0.1em] text-muted-foreground uppercase backdrop-blur-sm"
+                aria-live="polite"
+              >
+                {selectedIndex + 1} / {items.length}
+              </p>
+
+              {items.length > 1 && (
+                <>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="icon"
+                    onClick={() => step(-1)}
+                    className="absolute top-1/2 -left-12 z-10 -translate-y-1/2"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft className="size-4" />
+                  </Button>
+
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="icon"
+                    onClick={() => step(1)}
+                    className="absolute top-1/2 -right-12 z-10 -translate-y-1/2"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight className="size-4" />
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         )}

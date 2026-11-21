@@ -1,7 +1,8 @@
+import { ProjectSection } from "@/components/project-section"
+import { ProjectLinks } from "@/components/project-links"
+import { TechStack } from "@/components/tech-stack"
 import { ImageCarousel } from "@/components/image-carousel"
-import Link from "next/link"
 import { ADMIN_PANEL_IMAGES } from "./constants"
-import { Badge } from "@/components/ui/badge"
 
 const ADMIN_PANEL_TECHNOLOGIES = [
   "React",
@@ -17,31 +18,26 @@ export default function WebAdminPanel() {
   const repoUrl = process.env.NEXT_PUBLIC_ADMIN_REPO!
 
   return (
-    <section className="space-y-4">
-      <h2 className="font-medium">Admin Panel</h2>
-
+    <ProjectSection
+      number="03"
+      title="Admin Panel"
+      meta={`${ADMIN_PANEL_IMAGES.length} screens`}
+    >
       <ImageCarousel items={ADMIN_PANEL_IMAGES} />
 
-      <p className="text-sm text-muted-foreground">
+      <p className="max-w-2xl text-sm text-muted-foreground">
         Admin dashboard for managing products, variants, orders, and storefront
         content.
       </p>
 
-      <div className="flex flex-wrap gap-3">
-        {ADMIN_PANEL_TECHNOLOGIES.map((technology) => (
-          <Badge key={technology}>{technology}</Badge>
-        ))}
-      </div>
+      <TechStack items={ADMIN_PANEL_TECHNOLOGIES} />
 
-      <div className="flex gap-4 text-sm">
-        <Link href={demoUrl} target="_blank" className="underline">
-          Live Demo
-        </Link>
-
-        <Link href={repoUrl} target="_blank" className="underline">
-          GitHub Repo
-        </Link>
-      </div>
-    </section>
+      <ProjectLinks
+        items={[
+          { label: "Live Demo", href: demoUrl },
+          { label: "GitHub Repo", href: repoUrl },
+        ]}
+      />
+    </ProjectSection>
   )
 }

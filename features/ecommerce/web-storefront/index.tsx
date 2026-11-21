@@ -1,7 +1,8 @@
-import Link from "next/link"
+import { ProjectSection } from "@/components/project-section"
+import { ProjectLinks } from "@/components/project-links"
+import { TechStack } from "@/components/tech-stack"
 import { ImageCarousel } from "@/components/image-carousel"
 import { STOREFRONT_IMAGES } from "./constants"
-import { Badge } from "@/components/ui/badge"
 
 const WEB_STOREFRONT_TECHNOLOGIES = [
   "Next.js",
@@ -16,31 +17,26 @@ export default function WebStorefront() {
   const repoUrl = process.env.NEXT_PUBLIC_STORE_REPO!
 
   return (
-    <section className="space-y-4">
-      <h2 className="font-medium">Web Storefront</h2>
-
+    <ProjectSection
+      number="01"
+      title="Web Storefront"
+      meta={`${STOREFRONT_IMAGES.length} screens`}
+    >
       <ImageCarousel items={STOREFRONT_IMAGES} />
 
-      <p className="text-sm text-muted-foreground">
+      <p className="max-w-2xl text-sm text-muted-foreground">
         E-commerce storefront with product browsing, variant selection, cart,
         and checkout flow.
       </p>
 
-      <div className="flex flex-wrap gap-3">
-        {WEB_STOREFRONT_TECHNOLOGIES.map((technology) => (
-          <Badge key={technology}>{technology}</Badge>
-        ))}
-      </div>
+      <TechStack items={WEB_STOREFRONT_TECHNOLOGIES} />
 
-      <div className="flex gap-4 text-sm">
-        <Link href={demoUrl} target="_blank" className="underline">
-          Live Demo
-        </Link>
-
-        <Link href={repoUrl} target="_blank" className="underline">
-          GitHub Repo
-        </Link>
-      </div>
-    </section>
+      <ProjectLinks
+        items={[
+          { label: "Live Demo", href: demoUrl },
+          { label: "GitHub Repo", href: repoUrl },
+        ]}
+      />
+    </ProjectSection>
   )
 }

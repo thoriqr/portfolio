@@ -5,11 +5,11 @@ import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Metadata } from "next"
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" })
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" })
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-geist-mono",
 })
 
 export const metadata: Metadata = {
@@ -39,10 +39,11 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
-          <div className="mx-auto max-w-5xl">
-            <div className="absolute top-6 right-6">
+          <div className="relative mx-auto max-w-4xl px-4">
+            <div className="absolute top-6 right-4">
               <ThemeToggle />
             </div>
+
             {children}
           </div>
         </ThemeProvider>

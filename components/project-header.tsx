@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { ChevronLeft } from "lucide-react"
 
 type Props = {
@@ -10,19 +9,20 @@ type Props = {
 export function ProjectHeader({ title, description }: Props) {
   return (
     <section className="space-y-4">
-      {/* BACK BUTTON */}
-      <Button asChild variant="ghost" size="sm" className="w-fit gap-2">
-        <Link href="/">
-          <ChevronLeft className="size-4" />
-          Back to Home
-        </Link>
-      </Button>
+      <Link
+        href="/"
+        className="inline-flex items-center gap-2 font-mono text-[0.625rem] tracking-[0.14em] text-muted-foreground uppercase transition-colors hover:text-foreground"
+      >
+        <ChevronLeft className="size-3.5" />
+        Index
+      </Link>
 
-      {/* TITLE */}
       <div className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
+        <h1 className="text-[2.125rem] leading-tight font-semibold tracking-tight text-balance">
+          {title}
+        </h1>
 
-        <p className="max-w-2xl text-muted-foreground">{description}</p>
+        <p className="max-w-xl text-muted-foreground">{description}</p>
       </div>
     </section>
   )
