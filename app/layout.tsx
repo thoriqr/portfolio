@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s | Thoriq Rahman",
   },
   description:
-    "Fullstack developer focused on building web and e-commerce applications.",
+    "Fullstack developer building web and mobile apps with TypeScript, Flutter, and Go.",
 }
 
 export default function RootLayout({

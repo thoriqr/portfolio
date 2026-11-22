@@ -18,8 +18,8 @@ export default function HomePage() {
         </h1>
 
         <p className="max-w-xl text-muted-foreground">
-          Fullstack developer building web and mobile applications, with a focus
-          on e-commerce.
+          Fullstack developer. I build web and mobile apps with TypeScript,
+          Flutter, and Go.
         </p>
 
         <div className="flex flex-wrap gap-1.5 pt-1">

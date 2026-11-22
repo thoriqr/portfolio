@@ -25,8 +25,8 @@ export default function WebStorefront() {
       <ImageCarousel items={STOREFRONT_IMAGES} />
 
       <p className="max-w-2xl text-sm text-muted-foreground">
-        E-commerce storefront with product browsing, variant selection, cart,
-        and checkout flow.
+        Storefront for browsing products, picking a variant, adding to cart, and
+        checking out.
       </p>
 
       <TechStack items={WEB_STOREFRONT_TECHNOLOGIES} />

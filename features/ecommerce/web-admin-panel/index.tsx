@@ -26,7 +26,7 @@ export default function WebAdminPanel() {
       <ImageCarousel items={ADMIN_PANEL_IMAGES} />
 
       <p className="max-w-2xl text-sm text-muted-foreground">
-        Admin dashboard for managing products, variants, orders, and storefront
+        Admin dashboard to manage products, variants, orders, and storefront
         content.
       </p>
 

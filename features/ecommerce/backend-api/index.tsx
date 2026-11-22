@@ -21,13 +21,11 @@ export default function BackendApi() {
   return (
     <ProjectSection number="04" title="Backend API" meta="Node.js">
       <p className="max-w-2xl text-sm text-muted-foreground">
-        Backend API for authentication, products, checkout, orders, and payment
-        handling.
+        API for login, products, checkout, orders, and payments.
       </p>
 
       <p className="max-w-2xl text-sm text-muted-foreground">
-        Includes payment integration, Redis caching, scheduled jobs, integration
-        testing, CI/CD, and Swagger documentation.
+        Includes Redis caching, scheduled jobs, CI/CD, and Swagger docs.
       </p>
 
       <TechStack items={BACKEND_API_TECHNOLOGIES} />
