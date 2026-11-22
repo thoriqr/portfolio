@@ -208,95 +208,103 @@ export function ImageCarousel({ items, variant = "wide" }: Props) {
         className="fixed inset-0 m-0 h-screen w-screen max-w-none border-0 bg-transparent p-0 outline-none backdrop:bg-black/80"
       >
         {selectedImage && selectedIndex !== null && (
-          <div
-            className="fixed inset-0 flex items-center justify-center p-4"
-            onClick={(event) => {
-              if (event.target === event.currentTarget) {
-                dialogRef.current?.close()
-              }
-            }}
-          >
-            <div
-              className="relative max-h-[90vh] max-w-[95vw] select-none"
-              onPointerDown={(event) => {
-                swipeStart.current = { x: event.clientX, y: event.clientY }
-              }}
-              onPointerUp={(event) => {
-                const start = swipeStart.current
-
-                swipeStart.current = null
-
-                if (!start) return
-
-                const deltaX = event.clientX - start.x
-                const deltaY = event.clientY - start.y
-
-                if (Math.abs(deltaX) < SWIPE_THRESHOLD) return
-                if (Math.abs(deltaX) < Math.abs(deltaY)) return
-
-                step(deltaX < 0 ? 1 : -1)
-              }}
-              onPointerCancel={() => {
-                swipeStart.current = null
-              }}
-            >
-              <Image
-                src={selectedImage.src}
-                alt={selectedImage.label}
-                width={1600}
-                height={1200}
-                sizes="95vw"
-                draggable={false}
-                className="max-h-[90vh] w-auto max-w-[95vw] object-contain"
-              />
-
-              <Button
-                type="button"
-                variant="secondary"
-                size="icon"
-                onClick={() => dialogRef.current?.close()}
-                className="absolute top-2 -right-12 z-10"
-                aria-label="Close image"
-              >
-                <X className="size-4" />
-              </Button>
-
-              <Badge className="absolute bottom-3 left-3 z-10 border bg-background/90 px-2 py-1 font-mono text-[0.625rem] font-medium tracking-normal text-foreground normal-case backdrop-blur-sm">
-                {selectedImage.label}
-              </Badge>
-
+          <div className="fixed inset-0 flex flex-col">
+            {/* Controls sit on the viewport, not the image. Anchoring them to
+                the image pushed them off-screen whenever the image was wide. */}
+            <div className="flex items-center justify-between gap-3 px-3 py-2">
               <p
-                className="absolute right-3 bottom-3 z-10 border bg-background/90 px-2 py-1 font-mono text-[0.625rem] tracking-[0.1em] text-muted-foreground uppercase backdrop-blur-sm"
+                className="font-mono text-[0.625rem] tracking-[0.1em] text-background/80 uppercase"
                 aria-live="polite"
               >
                 {selectedIndex + 1} / {items.length}
               </p>
 
-              {items.length > 1 && (
-                <>
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    size="icon"
-                    onClick={() => step(-1)}
-                    className="absolute top-1/2 -left-12 z-10 -translate-y-1/2"
-                    aria-label="Previous image"
-                  >
-                    <ChevronLeft className="size-4" />
-                  </Button>
+              <div className="flex items-center gap-1.5">
+                {items.length > 1 && (
+                  <>
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      size="icon"
+                      onClick={() => step(-1)}
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="size-4" />
+                    </Button>
 
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    size="icon"
-                    onClick={() => step(1)}
-                    className="absolute top-1/2 -right-12 z-10 -translate-y-1/2"
-                    aria-label="Next image"
-                  >
-                    <ChevronRight className="size-4" />
-                  </Button>
-                </>
-              )}
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      size="icon"
+                      onClick={() => step(1)}
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="size-4" />
+                    </Button>
+                  </>
+                )}
+
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="icon"
+                  onClick={() => dialogRef.current?.close()}
+                  aria-label="Close image"
+                >
+                  <X className="size-4" />
+                </Button>
+              </div>
+            </div>
+
+            <div
+              className="flex min-h-0 flex-1 items-center justify-center overflow-hidden p-3"
+              onClick={(event) => {
+                if (event.target === event.currentTarget) {
+                  dialogRef.current?.close()
+                }
+              }}
+            >
+              <div
+                className="relative select-none"
+                style={{ touchAction: "pan-y pinch-zoom" }}
+                onPointerDown={(event) => {
+                  if (event.pointerType === "mouse") return
+
+                  swipeStart.current = { x: event.clientX, y: event.clientY }
+                }}
+                onPointerUp={(event) => {
+                  const start = swipeStart.current
+
+                  swipeStart.current = null
+
+                  if (!start) return
+
+                  const deltaX = event.clientX - start.x
+                  const deltaY = event.clientY - start.y
+
+                  if (Math.abs(deltaX) < SWIPE_THRESHOLD) return
+                  if (Math.abs(deltaX) < Math.abs(deltaY)) return
+
+                  step(deltaX < 0 ? 1 : -1)
+                }}
+                onPointerCancel={() => {
+                  swipeStart.current = null
+                }}
+              >
+                <Image
+                  src={selectedImage.src}
+                  alt={selectedImage.label}
+                  width={1600}
+                  height={1200}
+                  sizes="95vw"
+                  draggable={false}
+                  className="block h-auto max-h-[calc(100dvh-6rem)] w-auto max-w-[calc(100vw-1.5rem)] object-contain"
+                />
+
+                <Badge className="absolute bottom-2 left-2 z-10 max-w-[calc(100%-1rem)] truncate border bg-background/90 px-2 py-1 font-mono text-[0.625rem] font-medium tracking-normal text-foreground normal-case backdrop-blur-sm">
+                  {selectedImage.label}
+                </Badge>
+              </div>
             </div>
           </div>
         )}
