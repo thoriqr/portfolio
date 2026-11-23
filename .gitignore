@@ -39,3 +39,6 @@ next-env.d.ts
 
 # local coding-agent preferences and scratch work
 .commandcode/
+
+# CV build artifacts, regenerated from cv/CV.yaml
+cv/rendercv_output/

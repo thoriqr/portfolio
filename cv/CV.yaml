@@ -1,0 +1,74 @@
+cv:
+  name: Thoriq Rahman
+  headline: Fullstack Developer
+  email: thoriq.dev@gmail.com
+  location: Indonesia
+  website: https://thoriqr.my.id
+  social_networks:
+    - network: GitHub
+      username: thoriqr
+
+  sections:
+    education:
+      - institution: STMIK Yadika Bangil
+        area: Manajemen Informatika
+        degree: D3
+        start_date: 2017
+        end_date: 2020
+        location: Bangil, Indonesia
+
+    summary:
+      - "Fullstack developer with most of my work on the backend. I build APIs in TypeScript, Node.js, and Go, plus the web and Flutter apps that use them."
+
+    projects:
+      - name: Commerce Platform
+        start_date: 2025
+        end_date: present
+        highlights:
+          - "Built a fullstack e-commerce platform: Node.js/TypeScript API, Next.js storefront, React admin dashboard, and Flutter mobile app."
+          - "Designed a snapshot-based checkout and order flow, so order data stays consistent after product or price changes."
+          - "Integrated Midtrans payments and RajaOngkir shipping cost calculation, with Redis caching."
+          - "Built a variant-based product model for stock and pricing, plus role-based access control and admin invitation flow."
+          - "Added integration testing and CI automation with GitHub Actions."
+          - "Repos: commerce-core-api · commerce-web-admin · commerce-web-storefront · commerce-flutter-storefront"
+
+      - name: Stash-it
+        start_date: 2026
+        end_date: present
+        highlights:
+          - "Built a Go/Fiber API with a separate Asynq worker, PostgreSQL via pgx, and Redis-backed rate limiting and job queues."
+          - "Added server-side link preview extraction behind a guarded outbound HTTP client."
+          - "Implemented session security with Argon2id password hashing, refresh token rotation, and reuse detection."
+          - "Built the Flutter client with Riverpod and Dio, including Android share intake that keeps unsaved links on the device before the request is sent."
+          - "Owns the release pipeline: signed Android builds, in-app update checks, and SHA-256 verification, distributed outside Google Play."
+          - "Repos: stash-it-backend · stash-it-app"
+
+    skills:
+      - label: Languages
+        details: TypeScript, Node.js, Go, Dart
+      - label: Frontend
+        details: React, Next.js, Flutter
+      - label: Data
+        details: PostgreSQL, Redis
+
+design:
+  theme: engineeringresumes
+  typography:
+    line_spacing: 0.65em
+    font_size:
+      body: 11pt
+      name: 26pt
+  page:
+    size: a4
+    top_margin: 1.4cm
+    bottom_margin: 1.4cm
+    left_margin: 1.6cm
+    right_margin: 1.6cm
+
+settings:
+  render_command:
+    output_folder: rendercv_output
+    pdf_path: ../public/cv/thoriq-rahman-cv.pdf
+    dont_generate_png: true
+    dont_generate_markdown: true
+    dont_generate_html: true
